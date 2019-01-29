@@ -1,7 +1,6 @@
 package main
 
 import (
-	"./lib"
 	"archive/zip"
 	"bytes"
 	"flag"
@@ -10,7 +9,7 @@ import (
 	"os"
 )
 
-func packFilesToArchive(filesList []lib.File, archiveName string) {
+func packFilesToArchive(filesList []File, archiveName string) {
 	zipFile, err := os.OpenFile(archiveName, os.O_WRONLY | os.O_CREATE | os.O_TRUNC, 0644)
 
 	if err != nil {
@@ -25,7 +24,7 @@ func packFilesToArchive(filesList []lib.File, archiveName string) {
 
 	for _, file := range filesList {
 		if !file.CanAdd() {
-			fmt.Println("File %s can't be added to archive", file.Path)
+			fmt.Printf("File %s can't be added to archive\n", file.Path)
 			continue
 		}
 
@@ -66,7 +65,7 @@ func main() {
 		return
 	}
 
-	hg := lib.Repo{CmdPath: "hg", RevFrom: revFrom, RevTo: revTo}
+	hg := Repo{CmdPath: "hg", RevFrom: revFrom, RevTo: revTo}
 
 	if err := hg.CheckRepo(); err != nil {
 		log.Fatalf("Repo not found here: %s", err)
